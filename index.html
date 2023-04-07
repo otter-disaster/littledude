@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <script src="walkdude.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <title>Little Dude</title>
+</head>
+    <body>
+        <!-- little dude's body -->
+        <div id="littledude">
+            <p id="top"> </p>
+            <p id="head"> </p>
+            <p id="eyes"> </p>
+            <p id="mouth"> </p>
+            <p id="butt"> </p>
+            <p id="feet"> </p>
+        </div>
+
+        <form id ="start_button">
+            <center>
+                <div id="expression">
+                    <p>how would you like me to look?</p>
+                    <br>
+                    <input type="radio" id="happy" name="expression" value="happy">
+                    <label for="html">happy</label><br>
+                    <input type="radio" id="angry" name="expression" value="angry">
+                    <label for="css">angry</label><br>
+                    <input type="radio" id="surprised" name="expression" value="surprised">
+                    <label for="javascript">surprised</label>
+                </div>
+
+                <br>
+                <br>
+
+                <div id="speed">
+                    <p>how quickly would you like me to move?</p>
+                    <br>
+                    <input type="radio" id="slowly" name="speed" value="slowly">
+                    <label for="html">slowly</label><br>
+                    <input type="radio" id="quickly" name="speed" value="quickly">
+                    <label for="css">quickly</label><br>
+                    <input type="radio" id="very_quickly" name="speed" value="very_quickly">
+                    <label for="javascript">very quickly</label>
+                </div>
+                <br>
+                <div>
+                    <input type = "button" onclick = "buildDude('walk')" value = "wee walkie">
+                    <input type = "button" onclick = "buildDude('dance')" value = "wee dance">
+                </div>
+            </center>
+        </form>
+    </body>
+</html>

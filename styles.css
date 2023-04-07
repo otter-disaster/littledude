@@ -1,0 +1,19 @@
+html * {
+    font-family: 'Menlo', sans-serif;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    position: relative;
+}
+
+#littledude {
+    position: absolute;
+    left: 45%;
+    margin-right: -50%;
+    text-align: center;
+}
