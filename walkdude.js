@@ -1,10 +1,11 @@
 let interval;
 let movement = 5;
 let ld;
-let feet_out = '&nbsp;/&nbsp;&nbsp;\\';
-let feet_in = '&nbsp;\\&nbsp;&nbsp;/';
-let left_arm = '&nbsp;\\O&nbsp;&nbsp;';
+let feet_out = '&nbsp;&nbsp;/&nbsp;&nbsp;\\';
+let feet_in = '&nbsp;&nbsp;\\&nbsp;&nbsp;/';
+let left_arm = '&nbsp;&nbsp;\\O&nbsp;&nbsp;';
 let right_arm = '&nbsp;&nbsp;&nbsp;O/';
+let move = 0;
 
 function buildDude(action) {
     var expression = document.forms["start_button"]["expression"].value;
@@ -13,13 +14,13 @@ function buildDude(action) {
     var mouth;
     if (expression === 'angry') {
         exp = 'n';
-        eyes = '&nbsp;O&nbsp;&ograve;&nbsp;&nbsp;&oacute;&nbsp;O';
+        eyes = '&nbsp;&nbsp;O&nbsp;&ograve;&nbsp;&nbsp;&oacute;&nbsp;O';
     } else if (expression === 'surprised') {
         exp = 'o';
-        eyes = '&nbsp;O&nbsp;.&nbsp;&nbsp;.&nbsp;O';
+        eyes = '&nbsp;&nbsp;O&nbsp;.&nbsp;&nbsp;.&nbsp;O';
     } else {
         exp = 'u';
-        eyes = '&nbsp;O&nbsp;.&nbsp;&nbsp;.&nbsp;O';
+        eyes = '&nbsp;&nbsp;O&nbsp;.&nbsp;&nbsp;.&nbsp;O';
     }
     mouth = `${left_arm}${exp}${right_arm}`;
 
@@ -30,10 +31,10 @@ function buildDude(action) {
     } else {
         speed = 100;
     }
-    document.getElementById("head").innerHTML = '&nbsp;.oooo.'
+    document.getElementById("head").innerHTML = '&nbsp;&nbsp;.oooo.'
     document.getElementById("eyes").innerHTML = eyes;
     document.getElementById("mouth").innerHTML = mouth;
-    document.getElementById("butt").innerHTML = '&nbsp;&middot;oooo&middot;'
+    document.getElementById("butt").innerHTML = '&nbsp;&nbsp;&middot;oooo&middot;'
     document.getElementById("feet").innerHTML = feet_out;
 
     const questions = document.getElementById("start_button");
@@ -68,14 +69,11 @@ function walk() {
 }
 
 function basicDance() {
-    if (left_arm !== '/O&nbsp;&nbsp;') {
-        left_arm = '/O&nbsp;&nbsp;';
-    } else {
-        left_arm = '\\O&nbsp;&nbsp;';
-    }
-    if (right_arm !== '&nbsp;&nbsp;&nbsp;O/') {
+    if (left_arm !== '&nbsp;&nbsp;\\O&nbsp;&nbsp;') {
+        left_arm = '&nbsp;&nbsp;\\O&nbsp;&nbsp;';
         right_arm = '&nbsp;&nbsp;&nbsp;O/';
     } else {
+        left_arm = '&nbsp;&nbsp;/O&nbsp;&nbsp;';
         right_arm = '&nbsp;&nbsp;&nbsp;O\\';
     }
     document.getElementById("mouth").innerHTML = `${left_arm}${exp}${right_arm}`;
@@ -83,26 +81,42 @@ function basicDance() {
 }
 
 function armsUpDance() {
-    if (left_arm !== 'O/&nbsp;') {
-        left_arm = 'O/&nbsp;';
+    if (left_arm !== '&nbsp&nbsp&nbspO/&nbsp') {
+        left_arm = '&nbsp&nbsp&nbspO/&nbsp';
+        right_arm = '&nbsp&nbsp;&nbsp;O/';
     } else {
-        left_arm = '\\O&nbsp;&nbsp;';
+        left_arm = '&nbsp\\O&nbsp;&nbsp;';
+        right_arm = '&nbsp&nbsp;\\O';
     }
-    if (right_arm !== '&nbsp;&nbsp;O/') {
-        right_arm = '&nbsp;&nbsp;O/';
+    document.getElementById("mouth").innerHTML = `${left_arm}${exp}${right_arm}`;
+    moveFeet();
+}
+
+function discoDance() {
+    if (left_arm !== '&nbsp&nbsp\\O&nbsp&nbsp') {
+        left_arm = '&nbsp&nbsp\\O&nbsp&nbsp';
+        right_arm = '&nbsp&nbsp;&nbsp;O\\';
     } else {
-        right_arm = '&nbsp;&nbsp;\\O';
+        left_arm = '&nbsp&nbsp;/O&nbsp;&nbsp;';
+        right_arm = '&nbsp&nbsp;&nbsp;O/';
     }
     document.getElementById("mouth").innerHTML = `${left_arm}${exp}${right_arm}`;
     moveFeet();
 }
 
 function dance() {
-    let move = Math.floor(Math.random() * 10);
-    if (move <= 5) {
+    if (move === undefined || move <= 7) {
         basicDance();
-    } else if (move <= 7) {
+        move+=1;
+    } else if (move <= 15) {
         armsUpDance();
+        move+=1;
+    } else if (move <= 22) {
+        discoDance();
+        move+=1;
+        if (move === 22) {
+            move = 0;
+        }
     }
 }
 
