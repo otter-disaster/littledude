@@ -1,4 +1,4 @@
-import * as dudeHelper from './dudeHelper.js';
+import * as dudeHelper from './dudehelper.js';
 
 let exp;
 let interval;
@@ -7,10 +7,6 @@ let ld;
 let left_arm = '&nbsp;&nbsp;\\O&nbsp;&nbsp;';
 let right_arm = '&nbsp;&nbsp;&nbsp;O/';
 let move = 0;
-
-function bl() {
-    alert("bu");
-}
 
 function walk() {
     dudeHelper.moveFeet();
@@ -61,7 +57,7 @@ function discoDance() {
 }
 
 function dance() {
-    if (move === undefined || move <= 7) {
+    if (move == undefined || move <= 7) {
         basicDance();
         move+=1;
     } else if (move <= 15) {
@@ -114,7 +110,7 @@ function buildDude(action) {
     document.getElementById("eyes").innerHTML = eyes;
     document.getElementById("mouth").innerHTML = mouth;
     document.getElementById("butt").innerHTML = '&nbsp;&nbsp;&middot;oooo&middot;'
-    document.getElementById("feet").innerHTML = dudeHelper.feet_out;
+    document.getElementById("feet").innerHTML = dudeHelper.feet_out ?? '&nbsp;&nbsp;/&nbsp;&nbsp;\\';
 
     const questions = document.getElementById("start_button");
     questions.remove();
