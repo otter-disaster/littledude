@@ -8,3 +8,13 @@ export function moveFeet() {
         document.getElementById("feet").innerHTML = feet_out;
     }
 }
+
+export function detectCollision(ld, movement) {
+    let screenWidth = document.body.clientWidth;
+    let leftPosition = Number(ld.style.left.replace('px',''));
+    if (leftPosition + 100 >= screenWidth && movement === 5) {
+        return true;
+    } else if (leftPosition <= 50 && movement === -5) {
+        return true;
+    }
+}

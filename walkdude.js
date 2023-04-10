@@ -1,11 +1,12 @@
 import * as dudeHelper from './dudehelper.js';
+import * as danceMoves from './danceMoves.js';
 
 let exp;
 let interval;
 let movement = 5;
 let ld;
-let left_arm = '&nbsp;&nbsp;\\O&nbsp;&nbsp;';
-let right_arm = '&nbsp;&nbsp;&nbsp;O/';
+let leftArm = '&nbsp;&nbsp;\\O&nbsp;&nbsp;';
+let rightArm = '&nbsp;&nbsp;&nbsp;O/';
 let move = 0;
 
 function walk() {
@@ -15,70 +16,24 @@ function walk() {
     } else {
         ld.style.left = ld.getBoundingClientRect().left + "px";
     }
-    if (detectCollision()) {
+    if (dudeHelper.detectCollision(ld, movement)) {
         movement = movement * -1;
     }
 }
 
-function basicDance() {
-    if (left_arm !== '&nbsp;&nbsp;\\O&nbsp;&nbsp;') {
-        left_arm = '&nbsp;&nbsp;\\O&nbsp;&nbsp;';
-        right_arm = '&nbsp;&nbsp;&nbsp;O/';
-    } else {
-        left_arm = '&nbsp;&nbsp;/O&nbsp;&nbsp;';
-        right_arm = '&nbsp;&nbsp;&nbsp;O\\';
-    }
-    document.getElementById("mouth").innerHTML = `${left_arm}${exp}${right_arm}`;
-    dudeHelper.moveFeet();
-}
-
-function armsUpDance() {
-    if (left_arm !== '&nbsp&nbsp&nbspO/&nbsp') {
-        left_arm = '&nbsp&nbsp&nbspO/&nbsp';
-        right_arm = '&nbsp&nbsp;&nbsp;O/';
-    } else {
-        left_arm = '&nbsp\\O&nbsp;&nbsp;';
-        right_arm = '&nbsp&nbsp;\\O';
-    }
-    document.getElementById("mouth").innerHTML = `${left_arm}${exp}${right_arm}`;
-    dudeHelper.moveFeet();
-}
-
-function discoDance() {
-    if (left_arm !== '&nbsp&nbsp\\O&nbsp&nbsp') {
-        left_arm = '&nbsp&nbsp\\O&nbsp&nbsp';
-        right_arm = '&nbsp&nbsp;&nbsp;O\\';
-    } else {
-        left_arm = '&nbsp&nbsp;/O&nbsp;&nbsp;';
-        right_arm = '&nbsp&nbsp;&nbsp;O/';
-    }
-    document.getElementById("mouth").innerHTML = `${left_arm}${exp}${right_arm}`;
-    dudeHelper.moveFeet();
-}
-
 function dance() {
     if (move == undefined || move <= 7) {
-        basicDance();
+        danceMoves.basicDance(exp);
         move+=1;
     } else if (move <= 15) {
-        armsUpDance();
+        danceMoves.armsUpDance(exp);
         move+=1;
     } else if (move <= 22) {
-        discoDance();
+        danceMoves.discoDance(exp);
         move+=1;
         if (move === 22) {
             move = 0;
         }
-    }
-}
-
-function detectCollision() {
-    let screenWidth = document.body.clientWidth;
-    let leftPosition = Number(ld.style.left.replace('px',''));
-    if (leftPosition + 100 >= screenWidth && movement === 5) {
-        return true;
-    } else if (leftPosition <= 50 && movement === -5) {
-        return true;
     }
 }
 
@@ -97,7 +52,7 @@ function buildDude(action) {
         exp = 'u';
         eyes = '&nbsp;&nbsp;O&nbsp;.&nbsp;&nbsp;.&nbsp;O';
     }
-    mouth = `${left_arm}${exp}${right_arm}`;
+    mouth = `${leftArm}${exp}${rightArm}`;
 
     if (speed === 'slowly') {
         speed = 500;
