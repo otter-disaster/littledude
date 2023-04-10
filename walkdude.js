@@ -1,11 +1,90 @@
+import * as dudeHelper from './dudeHelper.js';
+
+let exp;
 let interval;
 let movement = 5;
 let ld;
-let feet_out = '&nbsp;&nbsp;/&nbsp;&nbsp;\\';
-let feet_in = '&nbsp;&nbsp;\\&nbsp;&nbsp;/';
 let left_arm = '&nbsp;&nbsp;\\O&nbsp;&nbsp;';
 let right_arm = '&nbsp;&nbsp;&nbsp;O/';
 let move = 0;
+
+function bl() {
+    alert("bu");
+}
+
+function walk() {
+    dudeHelper.moveFeet();
+    if (ld.style.left !== "") {
+        ld.style.left = Number(ld.style.left.replace('px',''))+movement+"px";
+    } else {
+        ld.style.left = ld.getBoundingClientRect().left + "px";
+    }
+    if (detectCollision()) {
+        movement = movement * -1;
+    }
+}
+
+function basicDance() {
+    if (left_arm !== '&nbsp;&nbsp;\\O&nbsp;&nbsp;') {
+        left_arm = '&nbsp;&nbsp;\\O&nbsp;&nbsp;';
+        right_arm = '&nbsp;&nbsp;&nbsp;O/';
+    } else {
+        left_arm = '&nbsp;&nbsp;/O&nbsp;&nbsp;';
+        right_arm = '&nbsp;&nbsp;&nbsp;O\\';
+    }
+    document.getElementById("mouth").innerHTML = `${left_arm}${exp}${right_arm}`;
+    dudeHelper.moveFeet();
+}
+
+function armsUpDance() {
+    if (left_arm !== '&nbsp&nbsp&nbspO/&nbsp') {
+        left_arm = '&nbsp&nbsp&nbspO/&nbsp';
+        right_arm = '&nbsp&nbsp;&nbsp;O/';
+    } else {
+        left_arm = '&nbsp\\O&nbsp;&nbsp;';
+        right_arm = '&nbsp&nbsp;\\O';
+    }
+    document.getElementById("mouth").innerHTML = `${left_arm}${exp}${right_arm}`;
+    dudeHelper.moveFeet();
+}
+
+function discoDance() {
+    if (left_arm !== '&nbsp&nbsp\\O&nbsp&nbsp') {
+        left_arm = '&nbsp&nbsp\\O&nbsp&nbsp';
+        right_arm = '&nbsp&nbsp;&nbsp;O\\';
+    } else {
+        left_arm = '&nbsp&nbsp;/O&nbsp;&nbsp;';
+        right_arm = '&nbsp&nbsp;&nbsp;O/';
+    }
+    document.getElementById("mouth").innerHTML = `${left_arm}${exp}${right_arm}`;
+    dudeHelper.moveFeet();
+}
+
+function dance() {
+    if (move === undefined || move <= 7) {
+        basicDance();
+        move+=1;
+    } else if (move <= 15) {
+        armsUpDance();
+        move+=1;
+    } else if (move <= 22) {
+        discoDance();
+        move+=1;
+        if (move === 22) {
+            move = 0;
+        }
+    }
+}
+
+function detectCollision() {
+    let screenWidth = document.body.clientWidth;
+    let leftPosition = Number(ld.style.left.replace('px',''));
+    if (leftPosition + 100 >= screenWidth && movement === 5) {
+        return true;
+    } else if (leftPosition <= 50 && movement === -5) {
+        return true;
+    }
+}
 
 function buildDude(action) {
     var expression = document.forms["start_button"]["expression"].value;
@@ -35,7 +114,7 @@ function buildDude(action) {
     document.getElementById("eyes").innerHTML = eyes;
     document.getElementById("mouth").innerHTML = mouth;
     document.getElementById("butt").innerHTML = '&nbsp;&nbsp;&middot;oooo&middot;'
-    document.getElementById("feet").innerHTML = feet_out;
+    document.getElementById("feet").innerHTML = dudeHelper.feet_out;
 
     const questions = document.getElementById("start_button");
     questions.remove();
@@ -48,84 +127,5 @@ function buildDude(action) {
     }
 }
 
-function moveFeet() {
-    if (document.getElementById("feet").innerHTML === feet_out) {
-        document.getElementById("feet").innerHTML = feet_in;
-    } else {
-        document.getElementById("feet").innerHTML = feet_out;
-    }
-}
-
-function walk() {
-    moveFeet();
-    if (ld.style.left !== "") {
-        ld.style.left = Number(ld.style.left.replace('px',''))+movement+"px";
-    } else {
-        ld.style.left = ld.getBoundingClientRect().left + "px";
-    }
-    if (detectCollision()) {
-        movement = movement * -1;
-    }
-}
-
-function basicDance() {
-    if (left_arm !== '&nbsp;&nbsp;\\O&nbsp;&nbsp;') {
-        left_arm = '&nbsp;&nbsp;\\O&nbsp;&nbsp;';
-        right_arm = '&nbsp;&nbsp;&nbsp;O/';
-    } else {
-        left_arm = '&nbsp;&nbsp;/O&nbsp;&nbsp;';
-        right_arm = '&nbsp;&nbsp;&nbsp;O\\';
-    }
-    document.getElementById("mouth").innerHTML = `${left_arm}${exp}${right_arm}`;
-    moveFeet();
-}
-
-function armsUpDance() {
-    if (left_arm !== '&nbsp&nbsp&nbspO/&nbsp') {
-        left_arm = '&nbsp&nbsp&nbspO/&nbsp';
-        right_arm = '&nbsp&nbsp;&nbsp;O/';
-    } else {
-        left_arm = '&nbsp\\O&nbsp;&nbsp;';
-        right_arm = '&nbsp&nbsp;\\O';
-    }
-    document.getElementById("mouth").innerHTML = `${left_arm}${exp}${right_arm}`;
-    moveFeet();
-}
-
-function discoDance() {
-    if (left_arm !== '&nbsp&nbsp\\O&nbsp&nbsp') {
-        left_arm = '&nbsp&nbsp\\O&nbsp&nbsp';
-        right_arm = '&nbsp&nbsp;&nbsp;O\\';
-    } else {
-        left_arm = '&nbsp&nbsp;/O&nbsp;&nbsp;';
-        right_arm = '&nbsp&nbsp;&nbsp;O/';
-    }
-    document.getElementById("mouth").innerHTML = `${left_arm}${exp}${right_arm}`;
-    moveFeet();
-}
-
-function dance() {
-    if (move === undefined || move <= 7) {
-        basicDance();
-        move+=1;
-    } else if (move <= 15) {
-        armsUpDance();
-        move+=1;
-    } else if (move <= 22) {
-        discoDance();
-        move+=1;
-        if (move === 22) {
-            move = 0;
-        }
-    }
-}
-
-function detectCollision() {
-    let screenWidth = document.body.clientWidth;
-    let leftPosition = Number(ld.style.left.replace('px',''));
-    if (leftPosition + 100 >= screenWidth && movement === 5) {
-        return true;
-    } else if (leftPosition <= 50 && movement === -5) {
-        return true;
-    }
-}
+document.getElementsByName('walkButton')[0].addEventListener('click', function() { buildDude('walk') }, false);
+document.getElementsByName('danceButton')[0].addEventListener('click', function() { buildDude('dance') }, false);
