@@ -1,4 +1,4 @@
-import * as dudeHelper from './dudehelper.js';
+import * as dudeHelper from './dudeHelper.js';
 let leftArm;
 let rightArm;
 
