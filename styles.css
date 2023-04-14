@@ -1,6 +1,6 @@
 html * {
     font-family: 'Menlo', sans-serif;
-    font-size: 1em;
+    font-size: 1.5rem;
 }
 
 p {
@@ -23,11 +23,11 @@ p {
     width: 30%;
 }
 
-#actionMenu {
+#littleDudeSpace {
     width: 40%;
 }
 
-#thirdCol {
+#actionMenu {
     width: 30%;
 }
 
