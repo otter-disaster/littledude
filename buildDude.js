@@ -4,6 +4,11 @@ let leftArm = '&nbsp;&nbsp;\\O&nbsp;&nbsp;';
 let rightArm = '&nbsp;&nbsp;&nbsp;O/';
 
 export function buildDude(expression) {
+    changeMood(expression);
+    document.getElementById("feet").innerHTML = constants.FEET_OUT;
+}
+
+export function changeMood(expression) {
     var eyes;
     var mouth;
     if (expression === 'n') {
@@ -20,5 +25,4 @@ export function buildDude(expression) {
     document.getElementById("eyes").innerHTML = eyes;
     document.getElementById("mouth").innerHTML = mouth;
     document.getElementById("butt").innerHTML = constants.BUTT;
-    document.getElementById("feet").innerHTML = constants.FEET_OUT;
 }

@@ -4,16 +4,16 @@ import * as dudeBuilder from './buildDude.js';
 
 let expression;
 let speed;
+let updatedSpeed;
 let interval;
 let movement = 5;
 let ld;
 let currentDanceMove = 0;
 
 function start(action) {
-    expression = document.forms["start_button"]["expression"].value;
-    speed = document.forms["start_button"]["speed"].value;
+    expression = document.getElementById("mood").value;
+    speed = parseInt(document.getElementById("speedRange").value);
     const questions = document.getElementById("start_button");
-    questions.remove();
     dudeBuilder.buildDude(expression);
 
     ld = document.getElementById("littledude");
@@ -26,10 +26,13 @@ function start(action) {
 
 function walk() {
     dudeHelper.moveFeet();
+    expression = document.getElementById("mood").value;
+    dudeBuilder.changeMood(expression);
+    changeSpeed('walk');
     if (ld.style.left !== "") {
         ld.style.left = Number(ld.style.left.replace('px',''))+movement+"px";
     } else {
-        ld.style.left = ld.getBoundingClientRect().left + "px";
+       ld.style.left = '10px';
     }
     if (dudeHelper.detectCollision(ld, movement)) {
         movement = movement * -1;
@@ -37,6 +40,9 @@ function walk() {
 }
 
 function dance() {
+    expression = document.getElementById("mood").value;
+    dudeBuilder.changeMood(expression);
+    changeSpeed('dance');
     if (currentDanceMove == undefined || currentDanceMove <= 7) {
         danceMoves.basicDance(expression);
         currentDanceMove+=1;
@@ -52,5 +58,24 @@ function dance() {
     }
 }
 
-document.getElementsByName('walkButton')[0].addEventListener('click', function() { start('walk') }, false);
-document.getElementsByName('danceButton')[0].addEventListener('click', function() { start('dance') }, false);
+function startWalk() {
+    clearInterval(interval);
+    start('walk');
+}
+
+function startDance() {
+    clearInterval(interval);
+    start('dance');
+}
+
+function changeSpeed(action) {
+    let updatedSpeed = parseInt(document.getElementById("speedRange").value);
+    if (speed !== updatedSpeed) {
+        clearInterval(interval);
+        start(action);
+    }
+}
+
+document.getElementById('littledude').addEventListener('load', start('walk'));
+document.getElementsByName('walkButton')[0].addEventListener('click', function() { startWalk() }, false);
+document.getElementsByName('danceButton')[0].addEventListener('click', function() { startDance() }, false);
