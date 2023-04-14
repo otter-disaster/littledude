@@ -8,13 +8,45 @@ p {
     padding: 0;
 }
 
-body {
+/* body {
     position: relative;
-}
+} */
 
 #littledude {
     position: absolute;
-    left: 45%;
-    margin-right: -50%;
+    left: 0%;
+    margin-right: 0%;
     text-align: center;
+}
+
+#aspectMenu {
+    width: 30%;
+}
+
+#actionMenu {
+    width: 40%;
+}
+
+#thirdCol {
+    width: 30%;
+}
+
+#speedRange {
+    direction: rtl
+}
+
+.column {
+    position: relative;
+    float: left;
+    width: 33.33%;
+}
+
+.div {
+    width: 30%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
 }

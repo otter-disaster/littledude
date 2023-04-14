@@ -1,21 +1,67 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-  <link rel="stylesheet" href="styles.css">
-  <title>Little Dude</title>
+    <script type="module" src="./start.js"></script>
+    <script type="module" src="./dudeHelper.js"></script>
+    <script type="module" src="./danceMoves.js"></script>
+    <script type="module" src="./buildDude.js"></script>
+    <script type="module" src="./constants.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <title>Little Dude</title>
 </head>
     <body>
         <!-- little dude's body -->
-        <div id="littledude">
+        <div class="row">
+            <div class="column" id="aspectMenu">
+                <p>speed</p>
+                <input type="range" min="100" max="700" value="250" class="slider" id="speedRange">
+                <p>mood</p>
+                <select name="mood" id="mood">
+                    <option value="u">happy</option>
+                    <option value="n">angry</option>
+                    <option value="o">surprised</option>
+                </select>
+            </div>
+            <div class="column" id="actionMenu">&nbsp;
+                <div id="littledude">
+                    <p id="top"> </p>
+                    <p id="head"> </p>
+                    <p id="eyes"> </p>
+                    <p id="mouth"> </p>
+                    <p id="butt"> </p>
+                    <p id="feet"> </p>
+                </div>
+            </div>
+            <div class="column" id="thirdCol">
+                <p>
+                    <input name="walkButton" type = "button" value = "wee walkie">
+                </p>
+                <p>
+                    <input name="danceButton" type = "button" value = "wee dance">
+                </p>
+            </div>
+        </div>
+        </form>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+        <!-- <div id="littledude">
             <p id="top"> </p>
             <p id="head"> </p>
             <p id="eyes"> </p>
             <p id="mouth"> </p>
             <p id="butt"> </p>
             <p id="feet"> </p>
-        </div>
+        </div> -->
 
-        <form id ="start_button">
+        <!-- <form id ="start_button">
             <center>
                 <div id="expression">
                     <p>how would you like me to look?</p>
@@ -41,17 +87,9 @@
                     <input type="radio" id="very_quickly" name="speed" value="125">
                     <label for="javascript">very quickly</label>
                 </div>
-                <br>
-                <div>
+                <br> -->
+                <!-- <div>
                     <input name="walkButton" type = "button" value = "wee walkie">
                     <input name="danceButton" type = "button" value = "wee dance">
                 </div>
-            </center>
-        </form>
-        <script type="module" src="./start.js"></script>
-        <script type="module" src="./dudeHelper.js"></script>
-        <script type="module" src="./danceMoves.js"></script>
-        <script type="module" src="./buildDude.js"></script>
-        <script type="module" src="./constants.js"></script>
-    </body>
-</html>
+            </center> -->
