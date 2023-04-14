@@ -10,9 +10,10 @@ export function moveFeet() {
 
 export function detectCollision(ld, movement) {
     let leftPosition = Number(ld.style.left.replace('px',''));
-    if (leftPosition + 50 >= 500 && movement === 5) {
+    let littleDudeWidth = document.getElementById("littleDudeSpace").offsetWidth;
+    if (leftPosition + littleDudeWidth/2 >= littleDudeWidth && movement === 5) {
         return true;
-    } else if (leftPosition - 50 <= 0 && movement === -5) {
+    } else if (leftPosition <= 0 - (littleDudeWidth/3) && movement === -5) {
         return true;
     }
 }
