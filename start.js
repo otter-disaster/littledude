@@ -9,18 +9,37 @@ let interval;
 let movement = 5;
 let ld;
 let currentDanceMove = 0;
+let ck;
 
-function start(action) {
-    expression = document.getElementById("mood").value;
-    speed = parseInt(document.getElementById("speedRange").value);
-    const questions = document.getElementById("start_button");
+function start(action, speedChanged) {
+    ck = dudeHelper.getCookie();
+    let startAction = action;
+    if (ck !== null) {
+        if (ck['expression'] != null) {
+            expression = ck['expression'];
+            document.getElementById("mood").value = expression;
+        } else {
+            expression = document.getElementById("mood").value;
+        }
+        if (ck['speed'] != null && !speedChanged) {
+            speed = parseInt(ck['speed']);
+            document.getElementById("speedRange").value = speed;
+        } else {
+            speed = parseInt(document.getElementById("speedRange").value);
+        }
+        if (ck['action'] != null && !speedChanged) {
+            startAction = ck['action'];
+        }
+    }
     dudeBuilder.buildDude(expression);
 
     ld = document.getElementById("littledude");
-    if (action === 'walk') {
+    if (startAction === 'walk') {
         interval = setInterval(walk, speed);
-    } else if (action === 'dance') {
+        document.getElementById('walkButton').checked = true;
+    } else if (startAction === 'dance') {
         interval = setInterval(dance, speed);
+        document.getElementById('danceButton').checked = true;
     }
 }
 
@@ -29,6 +48,7 @@ function walk() {
     expression = document.getElementById("mood").value;
     dudeBuilder.changeMood(expression);
     changeSpeed('walk');
+    dudeHelper.saveCookie(expression, null, 'walk');
     if (ld.style.left !== "") {
         ld.style.left = Number(ld.style.left.replace('px',''))+movement+"px";
     } else {
@@ -42,6 +62,7 @@ function walk() {
 function dance() {
     expression = document.getElementById("mood").value;
     dudeBuilder.changeMood(expression);
+    dudeHelper.saveCookie(expression, null, 'dance');
     changeSpeed('dance');
     if (currentDanceMove == undefined || currentDanceMove <= 7) {
         danceMoves.basicDance(expression);
@@ -60,22 +81,23 @@ function dance() {
 
 function startWalk() {
     clearInterval(interval);
-    start('walk');
+    start('walk', true);
 }
 
 function startDance() {
     clearInterval(interval);
-    start('dance');
+    start('dance', true);
 }
 
 function changeSpeed(action) {
     let updatedSpeed = parseInt(document.getElementById("speedRange").value);
+    dudeHelper.saveCookie(null, updatedSpeed, null);
     if (speed !== updatedSpeed) {
         clearInterval(interval);
-        start(action);
+        start(action, true);
     }
 }
 
 document.getElementById('littledude').addEventListener('load', start('walk'));
-document.getElementsByName('walkButton')[0].addEventListener('click', function() { startWalk() }, false);
-document.getElementsByName('danceButton')[0].addEventListener('click', function() { startDance() }, false);
+document.getElementById('walkButton').addEventListener('click', function() { startWalk() }, false);
+document.getElementById('danceButton').addEventListener('click', function() { startDance() }, false);
