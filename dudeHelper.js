@@ -33,13 +33,18 @@ export function getCookie() {
     }
 }
 
-export function saveCookie(expression, speed, action) {
+export function saveCookie() {
     let existingCookieDict = getCookie();
     let newCookieDict = {};
     let newCookie = '';
-    newCookieDict['expression'] = expression ?? existingCookieDict['expression'];
-    newCookieDict['speed'] = speed ?? existingCookieDict['speed'];
-    newCookieDict['action'] = action ?? existingCookieDict['action'];
+    newCookieDict['expression'] = document.getElementById("mood").value;
+    newCookieDict['speed'] = parseInt(document.getElementById("speedRange").value);
+    if (document.getElementById('danceButton').checked) {
+        newCookieDict['action'] = 'dance';
+    } else {
+        newCookieDict['action'] = 'walk';
+    }
+    
     for (var key in newCookieDict) {
         newCookie = newCookie + key + '=' + newCookieDict[key] + ',';
     }

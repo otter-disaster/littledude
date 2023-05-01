@@ -10,27 +10,24 @@ let movement = 5;
 let ld;
 let currentDanceMove = 0;
 let ck;
+let test;
 
 function start(action, speedChanged) {
     ck = dudeHelper.getCookie();
     let startAction = action;
-    if (ck !== null) {
+    if (ck != null) {
         if (ck['expression'] != null) {
-            expression = ck['expression'];
-            document.getElementById("mood").value = expression;
-        } else {
-            expression = document.getElementById("mood").value;
+            document.getElementById("mood").value = ck['expression'];
         }
         if (ck['speed'] != null && !speedChanged) {
-            speed = parseInt(ck['speed']);
-            document.getElementById("speedRange").value = speed;
-        } else {
-            speed = parseInt(document.getElementById("speedRange").value);
+            document.getElementById("speedRange").value = parseInt(ck['speed']);
         }
         if (ck['action'] != null && !speedChanged) {
             startAction = ck['action'];
         }
     }
+    expression = document.getElementById("mood").value;
+    speed = parseInt(document.getElementById("speedRange").value);
     dudeBuilder.buildDude(expression);
 
     ld = document.getElementById("littledude");
@@ -48,7 +45,7 @@ function walk() {
     expression = document.getElementById("mood").value;
     dudeBuilder.changeMood(expression);
     changeSpeed('walk');
-    dudeHelper.saveCookie(expression, null, 'walk');
+    dudeHelper.saveCookie();
     if (ld.style.left !== "") {
         ld.style.left = Number(ld.style.left.replace('px',''))+movement+"px";
     } else {
@@ -62,7 +59,7 @@ function walk() {
 function dance() {
     expression = document.getElementById("mood").value;
     dudeBuilder.changeMood(expression);
-    dudeHelper.saveCookie(expression, null, 'dance');
+    dudeHelper.saveCookie();
     changeSpeed('dance');
     if (currentDanceMove == undefined || currentDanceMove <= 7) {
         danceMoves.basicDance(expression);
@@ -91,7 +88,7 @@ function startDance() {
 
 function changeSpeed(action) {
     let updatedSpeed = parseInt(document.getElementById("speedRange").value);
-    dudeHelper.saveCookie(null, updatedSpeed, null);
+    dudeHelper.saveCookie();
     if (speed !== updatedSpeed) {
         clearInterval(interval);
         start(action, true);
